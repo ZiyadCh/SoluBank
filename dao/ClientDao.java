@@ -61,4 +61,20 @@ public class ClientDao {
       System.out.println("Erreur" + e);
     }
   }
+
+  public Client getById(int id) {
+    try (Connection con = Database.gConnection();
+        PreparedStatement ps = con.prepareStatement("select id, nom, email from client where id = ?");) {
+      ps.setInt(1, id);
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          return new Client(rs.getInt("id"), rs.getString("nom"), rs.getString("email"));
+        }
+        return null;
+      }
+    } catch (SQLException e) {
+      System.out.println("Erreur" + e);
+      return null;
+    }
+  }
 }

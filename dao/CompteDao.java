@@ -102,4 +102,28 @@ public class CompteDao {
       System.out.println("Erreur" + e);
     }
   }
+
+  public Compte getById(int id) {
+    try (Connection con = Database.gConnection();
+        PreparedStatement ps = con.prepareStatement(
+            "select id, numero, solde, idclient, typecompte, decouverteautorise, tauxinteret from compte where id = ?");) {
+      ps.setInt(1, id);
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          String type = rs.getString("typecompte");
+          if ("courant".equals(type)) {
+            return new CompteCourant(rs.getInt("id"), rs.getString("numero"), rs.getDouble("solde"),
+                rs.getInt("idclient"), rs.getDouble("decouverteautorise"));
+          } else {
+            return new CompteEpargne(rs.getInt("id"), rs.getString("numero"), rs.getDouble("solde"),
+                rs.getInt("idclient"), rs.getDouble("tauxinteret"));
+          }
+        }
+        return null;
+      }
+    } catch (SQLException e) {
+      System.out.println("Erreur" + e);
+      return null;
+    }
+  }
 }
