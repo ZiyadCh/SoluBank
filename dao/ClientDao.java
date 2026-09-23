@@ -51,4 +51,14 @@ public class ClientDao {
       System.out.println("Erreur" + e);
     }
   }
+
+  public void delete(int id) {
+    try (Connection con = Database.gConnection();
+        PreparedStatement ps = con.prepareStatement("delete from client where id = ?");) {
+      ps.setInt(1, id);
+      ps.executeUpdate();
+    } catch (SQLException e) {
+      System.out.println("Erreur" + e);
+    }
+  }
 }
