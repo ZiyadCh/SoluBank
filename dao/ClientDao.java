@@ -39,4 +39,16 @@ public class ClientDao {
       System.out.println("Erreur" + e);
     }
   }
+
+  public void update(Client client) {
+    try (Connection con = Database.gConnection();
+        PreparedStatement ps = con.prepareStatement("update client set nom = ?, email = ? where id = ?");) {
+      ps.setString(1, client.getNom());
+      ps.setString(2, client.getEmail());
+      ps.setInt(3, client.getId());
+      ps.executeUpdate();
+    } catch (SQLException e) {
+      System.out.println("Erreur" + e);
+    }
+  }
 }
