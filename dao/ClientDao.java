@@ -34,6 +34,7 @@ public class ClientDao {
         PreparedStatement ps = con.prepareStatement("insert into client(nom,email) values(? ,?)");) {
       ps.setString(1, client.getNom());
       ps.setString(2, client.getEmail());
+      ps.executeUpdate();
     } catch (SQLException e) {
       System.out.println("Erreur" + e);
     }
