@@ -6,21 +6,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import models.Compte;
+import models.CompteCourant;
+import models.CompteEpargne;
 import utils.Database;
 
 public class CompteDao {
 
   public ArrayList<Compte> getList() {
     try (Connection con = Database.gConnection();
-        PreparedStatement ps = con.prepareStatement("select * from compte");
+        PreparedStatement ps = con.prepareStatement(
+            "select id, numero, solde, idclient, typecompte, decouverteautorise, tauxinteret from compte");
         ResultSet rs = ps.executeQuery()) {
       ArrayList<Compte> list = new ArrayList<>();
       while (rs.next()) {
         int id = rs.getInt("id");
-        String nom = rs.getString("nom");
-        String email = rs.getString("email");
-        Compte compte = new Compte(id, nom, email);
-        list.add(compte);
+        String numero = rs.getString("numero");
+        double solde = rs.getDouble("solde");
+        int idClient = rs.getInt("idclient");
+        String type = rs.getString("typecompte");
+        if ("courant".equals(type)) {
+          list.add(new CompteCourant(id, numero, solde, idClient, rs.getDouble("decouverteautorise")));
+        } else {
+          list.add(new CompteEpargne(id, numero, solde, idClient, rs.getDouble("tauxinteret")));
+        }
       }
       return list;
     } catch (SQLException e) {
@@ -30,23 +38,56 @@ public class CompteDao {
   }
 
   public void add(Compte compte) {
-    try (Connection con = Database.gConnection();
-        PreparedStatement ps = con.prepareStatement("insert into compte(nom,email) values(? ,?)");) {
-      ps.setString(1, compte.getNom());
-      ps.setString(2, compte.getEmail());
-      ps.executeUpdate();
+    try (Connection con = Database.gConnection()) {
+      if (compte instanceof CompteCourant cc) {
+        try (PreparedStatement ps = con.prepareStatement(
+            "insert into compte(numero,solde,idclient,typecompte,decouverteautorise) values(?,?,?,?,?)")) {
+          ps.setString(1, compte.getNumero());
+          ps.setDouble(2, compte.getSolde());
+          ps.setInt(3, compte.getIdClient());
+          ps.setString(4, "courant");
+          ps.setDouble(5, cc.getDecouvertAutorise());
+          ps.executeUpdate();
+        }
+      } else if (compte instanceof CompteEpargne ce) {
+        try (PreparedStatement ps = con.prepareStatement(
+            "insert into compte(numero,solde,idclient,typecompte,tauxinteret) values(?,?,?,?,?)")) {
+          ps.setString(1, compte.getNumero());
+          ps.setDouble(2, compte.getSolde());
+          ps.setInt(3, compte.getIdClient());
+          ps.setString(4, "epargne");
+          ps.setDouble(5, ce.getTauxInteret());
+          ps.executeUpdate();
+        }
+      }
     } catch (SQLException e) {
       System.out.println("Erreur" + e);
     }
   }
 
   public void update(Compte compte) {
-    try (Connection con = Database.gConnection();
-        PreparedStatement ps = con.prepareStatement("update compte set nom = ?, email = ? where id = ?");) {
-      ps.setString(1, compte.getNom());
-      ps.setString(2, compte.getEmail());
-      ps.setInt(3, compte.getId());
-      ps.executeUpdate();
+    try (Connection con = Database.gConnection()) {
+      if (compte instanceof CompteCourant cc) {
+        try (PreparedStatement ps = con.prepareStatement(
+            "update compte set numero=?, solde=?, idclient=?, decouverteautorise=? where id=?")) {
+          ps.setString(1, compte.getNumero());
+          ps.setDouble(2, compte.getSolde());
+          ps.setInt(3, compte.getIdClient());
+          ps.setDouble(4, cc.getDecouvertAutorise());
+          ps.setInt(5, compte.getId());
+          ps.executeUpdate();
+        }
+      } else if (compte instanceof CompteEpargne ce) {
+        try (PreparedStatement ps = con.prepareStatement(
+            "update compte set numero=?, solde=?, idclient=?, tauxinteret=? where id=?")) {
+          ps.setString(1, compte.getNumero());
+          ps.setDouble(2, compte.getSolde());
+          ps.setInt(3, compte.getIdClient());
+          ps.setDouble(4, ce.getTauxInteret());
+          ps.setInt(5, compte.getId());
+          ps.executeUpdate();
+        }
+      }
     } catch (SQLException e) {
       System.out.println("Erreur" + e);
     }
