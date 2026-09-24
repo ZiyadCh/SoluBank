@@ -13,4 +13,8 @@ public class ClientService {
     return clientList;
 
   }
+
+  public void addClient(Client client) {
+    clientDao.add(client);
+  }
 }

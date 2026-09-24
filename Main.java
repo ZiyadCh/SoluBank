@@ -41,6 +41,7 @@ public class Main {
     System.out.println("└─────────────────────────────────────┘");
     switch (scanner.nextLine()) {
       case "1" -> clientService.listClients().forEach(System.out::println);
+      // case "2" -> clientService.
       default -> System.out.println("choisir un option appropriat");
     }
   }
