@@ -21,4 +21,8 @@ public class ClientService {
   public void addClient(Client client) {
     clientDao.add(client);
   }
+
+  public void modifyClient(Client client) {
+    clientDao.update(client);
+  }
 }

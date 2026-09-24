@@ -69,6 +69,7 @@ public class Main {
     System.out.println("Email du clients");
     String email = scanner.nextLine();
     client.setEmail(email);
+    clientService.modifyClient(client);
     System.out.println("client modifie avec success");
   }
 
