@@ -34,4 +34,9 @@ public class Client {
   public void setEmail(String email) {
     this.email = email;
   }
+
+  @Override
+  public String toString() {
+    return "============\nId: " + this.id + " \nNom: " + this.nom + "\nEmail: " + this.email;
+  }
 }
