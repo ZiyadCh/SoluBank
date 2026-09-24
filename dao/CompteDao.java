@@ -93,16 +93,6 @@ public class CompteDao {
     }
   }
 
-  public void delete(int id) {
-    try (Connection con = Database.gConnection();
-        PreparedStatement ps = con.prepareStatement("delete from compte where id = ?");) {
-      ps.setInt(1, id);
-      ps.executeUpdate();
-    } catch (SQLException e) {
-      System.out.println("Erreur" + e);
-    }
-  }
-
   public Compte getById(int id) {
     try (Connection con = Database.gConnection();
         PreparedStatement ps = con.prepareStatement(

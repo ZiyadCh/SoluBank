@@ -25,7 +25,4 @@ public class CompteService {
     compteDao.update(compte);
   }
 
-  public void deleteCompte(int id) {
-    compteDao.delete(id);
-  }
 }

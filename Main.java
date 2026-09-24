@@ -148,14 +148,6 @@ public class Main {
     System.out.println("compte modifie avec success");
   }
 
-  public static void deleteCompteUI() {
-    System.out.println("Id du compte:");
-    int id = scanner.nextInt();
-    scanner.nextLine();
-    compteService.deleteCompte(id);
-    System.out.println("compte suppime avec success");
-  }
-
   public static void addTransactionUI() {
     System.out.println("Montant de la transaction");
     double montant = scanner.nextDouble();
@@ -210,13 +202,11 @@ public class Main {
     System.out.println("│1❯ Lister les Comptes                │");
     System.out.println("│2❯ Ajouter un Compte                 │");
     System.out.println("│3❯ Modifier un Compte                │");
-    System.out.println("│4❯ Supprimer un Compte               │");
     System.out.println("└─────────────────────────────────────┘");
     switch (scanner.nextLine()) {
       case "1" -> compteService.listComptes().forEach(System.out::println);
       case "2" -> addCompteUI();
       case "3" -> modifyCompteUI();
-      case "4" -> deleteCompteUI();
       default -> System.out.println("choisir un option appropriat");
     }
   }
