@@ -15,7 +15,7 @@ public class CompteDao {
   public ArrayList<Compte> getList() {
     try (Connection con = Database.gConnection();
         PreparedStatement ps = con.prepareStatement(
-            "select id, numero, solde, idclient, typecompte, decouverteautorise, tauxinteret from compte");
+            "select id, numero, solde, idclient, typecompte, decouvertautorise, tauxinteret from compte");
         ResultSet rs = ps.executeQuery()) {
       ArrayList<Compte> list = new ArrayList<>();
       while (rs.next()) {
@@ -25,7 +25,7 @@ public class CompteDao {
         int idClient = rs.getInt("idclient");
         String type = rs.getString("typecompte");
         if ("courant".equals(type)) {
-          list.add(new CompteCourant(id, numero, solde, idClient, rs.getDouble("decouverteautorise")));
+          list.add(new CompteCourant(id, numero, solde, idClient, rs.getDouble("decouvertautorise")));
         } else {
           list.add(new CompteEpargne(id, numero, solde, idClient, rs.getDouble("tauxinteret")));
         }
@@ -41,7 +41,7 @@ public class CompteDao {
     try (Connection con = Database.gConnection()) {
       if (compte instanceof CompteCourant cc) {
         try (PreparedStatement ps = con.prepareStatement(
-            "insert into compte(numero,solde,idclient,typecompte,decouverteautorise) values(?,?,?,?,?)")) {
+            "insert into compte(numero,solde,idclient,typecompte,decouvertautorise) values(?,?,?,?,?)")) {
           ps.setString(1, compte.getNumero());
           ps.setDouble(2, compte.getSolde());
           ps.setInt(3, compte.getIdClient());
@@ -69,7 +69,7 @@ public class CompteDao {
     try (Connection con = Database.gConnection()) {
       if (compte instanceof CompteCourant cc) {
         try (PreparedStatement ps = con.prepareStatement(
-            "update compte set numero=?, solde=?, idclient=?, decouverteautorise=? where id=?")) {
+            "update compte set numero=?, solde=?, idclient=?, decouvertautorise=? where id=?")) {
           ps.setString(1, compte.getNumero());
           ps.setDouble(2, compte.getSolde());
           ps.setInt(3, compte.getIdClient());
@@ -106,14 +106,14 @@ public class CompteDao {
   public Compte getById(int id) {
     try (Connection con = Database.gConnection();
         PreparedStatement ps = con.prepareStatement(
-            "select id, numero, solde, idclient, typecompte, decouverteautorise, tauxinteret from compte where id = ?");) {
+            "select id, numero, solde, idclient, typecompte, decouvertautorise, tauxinteret from compte where id = ?");) {
       ps.setInt(1, id);
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
           String type = rs.getString("typecompte");
           if ("courant".equals(type)) {
             return new CompteCourant(rs.getInt("id"), rs.getString("numero"), rs.getDouble("solde"),
-                rs.getInt("idclient"), rs.getDouble("decouverteautorise"));
+                rs.getInt("idclient"), rs.getDouble("decouvertautorise"));
           } else {
             return new CompteEpargne(rs.getInt("id"), rs.getString("numero"), rs.getDouble("solde"),
                 rs.getInt("idclient"), rs.getDouble("tauxinteret"));

@@ -19,12 +19,11 @@ public class TransactionDao {
       ArrayList<Transaction> list = new ArrayList<>();
       while (rs.next()) {
         int id = rs.getInt("id");
-        java.sql.Timestamp date = rs.getTimestamp("date");
         double montant = rs.getDouble("montant");
         TypeTransaction type = TypeTransaction.valueOf(rs.getString("type"));
         String lieu = rs.getString("lieu");
         int idCompte = rs.getInt("idcompte");
-        list.add(new Transaction(id, date, montant, type, lieu, idCompte));
+        list.add(new Transaction(id, montant, type, lieu, idCompte));
       }
       return list;
     } catch (SQLException e) {
@@ -79,7 +78,7 @@ public class TransactionDao {
       ps.setInt(1, id);
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
-          return new Transaction(rs.getInt("id"), rs.getTimestamp("date"), rs.getDouble("montant"),
+          return new Transaction(rs.getInt("id"), rs.getDouble("montant"),
               TypeTransaction.valueOf(rs.getString("type")), rs.getString("lieu"), rs.getInt("idcompte"));
         }
         return null;

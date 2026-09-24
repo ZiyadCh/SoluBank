@@ -44,4 +44,10 @@ public abstract class Compte {
   public void setIdClient(int idClient) {
     this.idClient = idClient;
   }
+
+  @Override
+  public String toString() {
+    return "============\nId: " + this.id + " \nNumero: " + this.numero + "\nSolde: " + this.solde
+        + "\nIdClient: " + this.idClient;
+  }
 }
