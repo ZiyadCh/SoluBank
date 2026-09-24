@@ -1,8 +1,11 @@
 import java.util.Scanner;
 
+import service.ClientService;
+
 public class Main {
 
   public static Scanner scanner = new Scanner(System.in);
+  public static ClientService clientService = new ClientService();
 
   public static void main(String[] args) {
 
@@ -37,6 +40,7 @@ public class Main {
     System.out.println("│5❯ Retour                            │");
     System.out.println("└─────────────────────────────────────┘");
     switch (scanner.nextLine()) {
+      // case "1" ->
       default:
         System.out.println("choisir un option appropriat");
     }
