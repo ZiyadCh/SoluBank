@@ -25,4 +25,8 @@ public class ClientService {
   public void modifyClient(Client client) {
     clientDao.update(client);
   }
+
+  public void deleteClient(int id) {
+    clientDao.delete(id);
+  }
 }

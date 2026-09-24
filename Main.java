@@ -44,6 +44,7 @@ public class Main {
       case "1" -> clientService.listClients().forEach(System.out::println);
       case "2" -> addClientUI();
       case "3" -> modifyClientUI();
+      case "4" -> deleteClientUI();
       default -> System.out.println("choisir un option appropriat");
     }
   }
@@ -71,6 +72,14 @@ public class Main {
     client.setEmail(email);
     clientService.modifyClient(client);
     System.out.println("client modifie avec success");
+  }
+
+  public static void deleteClientUI() {
+    System.out.println("Id du client:");
+    int id = scanner.nextInt();
+    scanner.nextLine();
+    clientService.deleteClient(id);
+    System.out.println("client suppimre avec success");
   }
 
   public static void afficherMenuComptes() {
