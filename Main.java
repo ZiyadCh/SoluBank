@@ -2,9 +2,9 @@ import java.util.Scanner;
 
 public class Main {
 
-  public static void main(String[] args) {
+  public static Scanner scanner = new Scanner(System.in);
 
-    Scanner scanner = new Scanner(System.in);
+  public static void main(String[] args) {
 
     while (true) {
       System.out.println("┌─────────────────────────────────────┐");
@@ -16,17 +16,11 @@ public class Main {
       System.out.println("│4❯ Quitter                           │");
       System.out.println("└─────────────────────────────────────┘");
       switch (scanner.nextLine()) {
-        case "1":
-          afficherMenuClients();
-          break;
-        case "2":
-          afficherMenuComptes();
-          break;
-        case "3":
-          afficherMenuTransactions();
-          break;
-        case "4":
-          System.exit(0);
+        case "1" -> afficherMenuClients();
+        case "2" -> afficherMenuComptes();
+        case "3" -> afficherMenuTransactions();
+        case "4" -> System.exit(0);
+        default -> System.out.println("choisir un option appropriat");
       }
       System.out.println();
     }
@@ -42,6 +36,10 @@ public class Main {
     System.out.println("│4❯ Supprimer un Client               │");
     System.out.println("│5❯ Retour                            │");
     System.out.println("└─────────────────────────────────────┘");
+    switch (scanner.nextLine()) {
+      default:
+        System.out.println("choisir un option appropriat");
+    }
   }
 
   public static void afficherMenuComptes() {
@@ -54,6 +52,10 @@ public class Main {
     System.out.println("│4❯ Supprimer un Compte               │");
     System.out.println("│5❯ Retour                            │");
     System.out.println("└─────────────────────────────────────┘");
+    switch (scanner.nextLine()) {
+      default:
+        System.out.println("choisir un option appropriat");
+    }
   }
 
   public static void afficherMenuTransactions() {
@@ -66,5 +68,9 @@ public class Main {
     System.out.println("│4❯ Supprimer une Transaction         │");
     System.out.println("│5❯ Retour                            │");
     System.out.println("└─────────────────────────────────────┘");
+    switch (scanner.nextLine()) {
+      default:
+        System.out.println("choisir un option appropriat");
+    }
   }
 }
