@@ -61,13 +61,15 @@ public class Main {
     System.out.println("Id du client:");
     int id = scanner.nextInt();
     scanner.nextLine();
+    Client client = clientService.getClientById(id);
 
     System.out.println("Nom du clients");
     String nom = scanner.nextLine();
+    client.setNom(nom);
     System.out.println("Email du clients");
     String email = scanner.nextLine();
-    clientService.addClient(new Client(nom, email));
-    System.out.println("client ajoute avec success");
+    client.setEmail(email);
+    System.out.println("client modifie avec success");
   }
 
   public static void afficherMenuComptes() {

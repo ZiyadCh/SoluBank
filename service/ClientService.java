@@ -14,6 +14,10 @@ public class ClientService {
 
   }
 
+  public Client getClientById(int id) {
+    return clientDao.getById(id);
+  }
+
   public void addClient(Client client) {
     clientDao.add(client);
   }
