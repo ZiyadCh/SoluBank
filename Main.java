@@ -21,10 +21,12 @@ public class Main {
         case "1" -> afficherMenuClients();
         case "2" -> afficherMenuComptes();
         case "3" -> afficherMenuTransactions();
-        case "4" -> System.exit(0);
+        case "4" -> {
+          System.out.println("au revoir");
+          return;
+        }
         default -> System.out.println("choisir un option appropriat");
       }
-      System.out.println();
     }
   }
 
@@ -36,7 +38,6 @@ public class Main {
     System.out.println("│2❯ Ajouter un Client                 │");
     System.out.println("│3❯ Modifier un Client                │");
     System.out.println("│4❯ Supprimer un Client               │");
-    System.out.println("│5❯ Retour                            │");
     System.out.println("└─────────────────────────────────────┘");
     switch (scanner.nextLine()) {
       case "1" -> clientService.listClients().forEach(System.out::println);
@@ -52,7 +53,6 @@ public class Main {
     System.out.println("│2❯ Ajouter un Compte                 │");
     System.out.println("│3❯ Modifier un Compte                │");
     System.out.println("│4❯ Supprimer un Compte               │");
-    System.out.println("│5❯ Retour                            │");
     System.out.println("└─────────────────────────────────────┘");
     switch (scanner.nextLine()) {
       default:
@@ -68,7 +68,6 @@ public class Main {
     System.out.println("│2❯ Ajouter une Transaction           │");
     System.out.println("│3❯ Modifier une Transaction          │");
     System.out.println("│4❯ Supprimer une Transaction         │");
-    System.out.println("│5❯ Retour                            │");
     System.out.println("└─────────────────────────────────────┘");
     switch (scanner.nextLine()) {
       default:
