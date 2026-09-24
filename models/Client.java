@@ -11,6 +11,11 @@ public class Client {
     this.email = email;
   }
 
+  public Client(String nom, String email) {
+    this.nom = nom;
+    this.email = email;
+  }
+
   public int getId() {
     return id;
   }

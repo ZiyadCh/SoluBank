@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import service.ClientService;
+import models.Client;
 
 public class Main {
 
@@ -41,9 +42,18 @@ public class Main {
     System.out.println("└─────────────────────────────────────┘");
     switch (scanner.nextLine()) {
       case "1" -> clientService.listClients().forEach(System.out::println);
-      // case "2" -> clientService.
+      case "2" -> addClientUI();
       default -> System.out.println("choisir un option appropriat");
     }
+  }
+
+  public static void addClientUI() {
+    System.out.println("Nom du clients");
+    String nom = scanner.nextLine();
+    System.out.println("Email du clients");
+    String email = scanner.nextLine();
+    clientService.addClient(new Client(nom, email));
+    System.out.println("client ajoute avec success");
   }
 
   public static void afficherMenuComptes() {
