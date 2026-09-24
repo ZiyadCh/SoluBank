@@ -43,11 +43,25 @@ public class Main {
     switch (scanner.nextLine()) {
       case "1" -> clientService.listClients().forEach(System.out::println);
       case "2" -> addClientUI();
+      case "3" -> modifyClientUI();
       default -> System.out.println("choisir un option appropriat");
     }
   }
 
   public static void addClientUI() {
+    System.out.println("Nom du clients");
+    String nom = scanner.nextLine();
+    System.out.println("Email du clients");
+    String email = scanner.nextLine();
+    clientService.addClient(new Client(nom, email));
+    System.out.println("client ajoute avec success");
+  }
+
+  public static void modifyClientUI() {
+    System.out.println("Id du client:");
+    int id = scanner.nextInt();
+    scanner.nextLine();
+
     System.out.println("Nom du clients");
     String nom = scanner.nextLine();
     System.out.println("Email du clients");
