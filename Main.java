@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 import service.ClientService;
 
 public class Main {
@@ -40,9 +39,8 @@ public class Main {
     System.out.println("│5❯ Retour                            │");
     System.out.println("└─────────────────────────────────────┘");
     switch (scanner.nextLine()) {
-      // case "1" ->
-      default:
-        System.out.println("choisir un option appropriat");
+      case "1" -> clientService.listClients().forEach(n -> System.out.println(n));
+      default -> System.out.println("choisir un option appropriat");
     }
   }
 

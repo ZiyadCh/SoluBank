@@ -8,7 +8,7 @@ import dao.ClientDao;
 public class ClientService {
   private static ClientDao clientDao = new ClientDao();
 
-  public static ArrayList<Client> listClients() {
+  public ArrayList<Client> listClients() {
     ArrayList<Client> clientList = clientDao.getList();
     return clientList;
 
