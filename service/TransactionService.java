@@ -43,4 +43,10 @@ public class TransactionService {
   public void deleteTransaction(int id) {
     transactionDao.delete(id);
   }
+
+  public double sumTransaction() {
+    return transactionDao.getList().stream()
+        .mapToDouble(Transaction::getMontant)
+        .sum();
+  }
 }
