@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.time.LocalDate;
 import service.ClientService;
 import service.CompteService;
 import service.TransactionService;
@@ -149,6 +150,8 @@ public class Main {
   }
 
   public static void addTransactionUI() {
+    System.out.println("Date de la transaction (yyyy-MM-dd)");
+    LocalDate date = LocalDate.parse(scanner.nextLine());
     System.out.println("Montant de la transaction");
     double montant = scanner.nextDouble();
     scanner.nextLine();
@@ -159,7 +162,7 @@ public class Main {
     System.out.println("Id du compte");
     int idCompte = scanner.nextInt();
     scanner.nextLine();
-    transactionService.addTransaction(new Transaction(0, montant, TypeTransaction.valueOf(type), lieu, idCompte));
+    transactionService.addTransaction(new Transaction(0, date, montant, TypeTransaction.valueOf(type), lieu, idCompte));
     System.out.println("transaction ajoute avec success");
   }
 
