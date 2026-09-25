@@ -211,6 +211,7 @@ public class Main {
       case "1" -> compteService.listComptes().forEach(System.out::println);
       case "2" -> addCompteUI();
       case "3" -> modifyCompteUI();
+      case "4" -> compteService.maxSolde().ifPresent(c -> System.out.println(c));
       default -> System.out.println("choisir un option appropriat");
     }
   }
