@@ -44,9 +44,9 @@ public class TransactionService {
     transactionDao.delete(id);
   }
 
-  public double sumTransaction() {
-    return transactionDao.getList().stream()
-        .mapToDouble(Transaction::getMontant)
-        .sum();
+  public Map<Integer, Double> sumTransaction() {
+    return transactionDao.getList()
+        .stream()
+        .collect(Collectors.groupingBy(Transaction::getIdCompte, Collectors.summingDouble(Transaction::getMontant)));
   }
 }

@@ -223,6 +223,7 @@ public class Main {
     System.out.println("│3❯ Modifier une Transaction          │");
     System.out.println("│4❯ Supprimer une Transaction         │");
     System.out.println("│5❯ Grouper Transaction par type      │");
+    System.out.println("│6❯ Somme des Transaction             │");
     System.out.println("└─────────────────────────────────────┘");
     switch (scanner.nextLine()) {
       case "1" -> transactionService.listTransactions().forEach(System.out::println);
@@ -230,6 +231,8 @@ public class Main {
       case "3" -> modifyTransactionUI();
       case "4" -> deleteTransactionUI();
       case "5" -> transactionService.groupedBy().forEach((key, value) -> System.out.println(key + " " + value));
+      case "6" -> transactionService.sumTransaction()
+          .forEach((key, value) -> System.out.println("Id " + key + ": moyen " + value));
       default -> System.out.println("choisir un option appropriat");
     }
   }
