@@ -1,6 +1,8 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -16,11 +18,10 @@ public class TransactionService {
     return transactionList;
   }
 
-  public ArrayList<Transaction> groupedBy() {
+  public Map<TypeTransaction, List<Transaction>> groupedBy() {
     ArrayList<Transaction> transactionList = transactionDao.getList();
-    transactionList.stream()
+    return transactionList.stream()
         .collect(Collectors.groupingBy(Transaction::getType));
-    return transactionList;
   }
 
   public Transaction getTransactionById(int id) {

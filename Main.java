@@ -226,7 +226,7 @@ public class Main {
       case "2" -> addTransactionUI();
       case "3" -> modifyTransactionUI();
       case "4" -> deleteTransactionUI();
-      case "5" -> transactionService.groupedBy();
+      case "5" -> transactionService.groupedBy().forEach((key, value) -> System.out.println(key + " " + value));
       default -> System.out.println("choisir un option appropriat");
     }
   }
