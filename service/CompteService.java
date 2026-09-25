@@ -31,4 +31,8 @@ public class CompteService {
     return compteDao.getList().stream().max(Comparator.comparingDouble(Compte::getSolde));
   }
 
+  public Optional<Compte> minSolde() {
+    return compteDao.getList().stream().min(Comparator.comparingDouble(Compte::getSolde));
+  }
+
 }

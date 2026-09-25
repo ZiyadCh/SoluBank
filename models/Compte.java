@@ -47,7 +47,7 @@ public abstract class Compte {
 
   @Override
   public String toString() {
-    return "============\nId: " + this.id + " \nNumero: " + this.numero + "\nSolde: " + this.solde
-        + "\nIdClient: " + this.idClient;
+    return "\nId: " + this.id + " \nNumero: " + this.numero + "\nSolde: " + this.solde
+        + "\nIdClient: " + this.idClient + "\n============";
   }
 }
