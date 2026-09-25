@@ -1,6 +1,8 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Optional;
 
 import models.Compte;
 import dao.CompteDao;
@@ -23,6 +25,10 @@ public class CompteService {
 
   public void modifyCompte(Compte compte) {
     compteDao.update(compte);
+  }
+
+  public Optional<Compte> maxSolde() {
+    return compteDao.getList().stream().max(Comparator.comparingDouble(Compte::getSolde));
   }
 
 }

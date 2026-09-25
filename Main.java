@@ -205,6 +205,7 @@ public class Main {
     System.out.println("│1❯ Lister les Comptes                │");
     System.out.println("│2❯ Ajouter un Compte                 │");
     System.out.println("│3❯ Modifier un Compte                │");
+    System.out.println("│4❯ min/max solde compte              │");
     System.out.println("└─────────────────────────────────────┘");
     switch (scanner.nextLine()) {
       case "1" -> compteService.listComptes().forEach(System.out::println);
