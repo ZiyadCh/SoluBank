@@ -1,8 +1,11 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import models.Transaction;
+import models.TypeTransaction;
 import dao.TransactionDao;
 
 public class TransactionService {
@@ -10,6 +13,13 @@ public class TransactionService {
 
   public ArrayList<Transaction> listTransactions() {
     ArrayList<Transaction> transactionList = transactionDao.getList();
+    return transactionList;
+  }
+
+  public ArrayList<Transaction> groupedBy() {
+    ArrayList<Transaction> transactionList = transactionDao.getList();
+    transactionList.stream()
+        .collect(Collectors.groupingBy(Transaction::getType));
     return transactionList;
   }
 
