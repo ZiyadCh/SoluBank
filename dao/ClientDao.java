@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
+
 import models.Client;
 import utils.Database;
 
@@ -78,16 +80,15 @@ public class ClientDao {
     }
   }
 
-  public Client getByName(String search) {
+  public Optional<Client> getByName(String search) {
     try (Connection con = Database.gConnection();
         PreparedStatement ps = con.prepareStatement("select id, nom, email from client where lower(nom) like ?");) {
       ps.setString(1, search.toLowerCase());
       try (ResultSet rs = ps.executeQuery()) {
-        ArrayList<Client> list = new ArrayList<>();
         if (rs.next()) {
-          return new Client(rs.getInt("id"), rs.getString("nom"), rs.getString("email"));
+          return Optional.of(new Client(rs.getInt("id"), rs.getString("nom"), rs.getString("email")));
         }
-        return null;
+        return Optional.empty();
       }
     } catch (SQLException e) {
       System.out.println("Erreur" + e);
