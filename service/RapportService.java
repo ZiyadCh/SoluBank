@@ -33,4 +33,10 @@ public class RapportService {
         .collect(Collectors.groupingBy(Compte::getIdClient));
 
   }
+
+  public Map<TypeTransaction, List<Transaction>> grouperPar() {
+    return transactionDao.getList()
+        .stream()
+        .collect(Collectors.groupingBy(Transaction::getType));
+  }
 }
