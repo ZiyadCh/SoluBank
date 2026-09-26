@@ -2,6 +2,7 @@ package service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -57,14 +58,31 @@ public class TransactionService {
         .collect(Collectors.toList());
   }
 
-  public void differentLieu(int id) {
-    transactionDao.getList()
+  public String differentLieu(int id) {
+    Optional<Map.Entry<String, Long>> findLieu = transactionDao.getList()
         .stream()
         .filter(n -> n.getIdCompte() == id)
         .collect(Collectors.groupingBy(Transaction::getLieu, Collectors.counting()))
         .entrySet()
         .stream()
-        .max(Map.Entry.comparingByValue())
-        .ifPresent(n -> System.out.println(n));
+        .max(Map.Entry.comparingByValue());
+    String mainLieu = "";
+    if (findLieu.isPresent()) {
+      mainLieu = findLieu.get().getKey();
+    }
+    return mainLieu;
+  }
+
+  public List<Transaction> susTransactions() {
+    List<Transaction> suspects = new ArrayList<>();
+    List<Transaction> lieus = new ArrayList<>();
+    suspects.addAll(montantEleve());
+    for (Transaction transaction : transactionDao.getList()) {
+      if (!transaction.getLieu().equals(differentLieu(transaction.getIdCompte()))) {
+        suspects.add(transaction);
+      }
+
+    }
+    return suspects;
   }
 }
