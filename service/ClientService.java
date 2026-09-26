@@ -1,6 +1,7 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import models.Client;
 import dao.ClientDao;
@@ -19,7 +20,7 @@ public class ClientService {
   }
 
   public Client searchClients(String search) {
-    return clientDao.getByName(search);
+    return clientDao.getByName(search).orElse(null);
   }
 
   public void addClient(Client client) {
