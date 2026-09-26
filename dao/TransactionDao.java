@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 import models.Transaction;
 import models.TypeTransaction;
 import utils.Database;
@@ -75,21 +76,21 @@ public class TransactionDao {
     }
   }
 
-  public Transaction getById(int id) {
+  public Optional<Transaction> getById(int id) {
     try (Connection con = Database.gConnection();
         PreparedStatement ps = con.prepareStatement(
             "select id, date, montant, type, lieu, idcompte from transaction where id = ?");) {
       ps.setInt(1, id);
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
-          return new Transaction(rs.getInt("id"), rs.getDate("date").toLocalDate(), rs.getDouble("montant"),
-              TypeTransaction.valueOf(rs.getString("type")), rs.getString("lieu"), rs.getInt("idcompte"));
+          return Optional.of(new Transaction(rs.getInt("id"), rs.getDate("date").toLocalDate(), rs.getDouble("montant"),
+              TypeTransaction.valueOf(rs.getString("type")), rs.getString("lieu"), rs.getInt("idcompte")));
         }
-        return null;
+        return Optional.empty();
       }
     } catch (SQLException e) {
       System.out.println("Erreur" + e);
-      return null;
+      return Optional.empty();
     }
   }
 }

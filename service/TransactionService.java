@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import models.Transaction;
@@ -29,7 +29,7 @@ public class TransactionService {
   }
 
   public Transaction getTransactionById(int id) {
-    return transactionDao.getById(id);
+    return transactionDao.getById(id).orElse(null);
   }
 
   public void addTransaction(Transaction transaction) {

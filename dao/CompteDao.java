@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import models.Compte;
 import models.CompteCourant;
 import models.CompteEpargne;
@@ -93,7 +94,7 @@ public class CompteDao {
     }
   }
 
-  public Compte getById(int id) {
+  public Optional<Compte> getById(int id) {
     try (Connection con = Database.gConnection();
         PreparedStatement ps = con.prepareStatement(
             "select id, numero, solde, idclient, typecompte, decouvertautorise, tauxinteret from compte where id = ?");) {
@@ -102,18 +103,18 @@ public class CompteDao {
         if (rs.next()) {
           String type = rs.getString("typecompte");
           if ("courant".equals(type)) {
-            return new CompteCourant(rs.getInt("id"), rs.getString("numero"), rs.getDouble("solde"),
-                rs.getInt("idclient"), rs.getDouble("decouvertautorise"));
+            return Optional.of(new CompteCourant(rs.getInt("id"), rs.getString("numero"), rs.getDouble("solde"),
+                rs.getInt("idclient"), rs.getDouble("decouvertautorise")));
           } else {
-            return new CompteEpargne(rs.getInt("id"), rs.getString("numero"), rs.getDouble("solde"),
-                rs.getInt("idclient"), rs.getDouble("tauxinteret"));
+            return Optional.of(new CompteEpargne(rs.getInt("id"), rs.getString("numero"), rs.getDouble("solde"),
+                rs.getInt("idclient"), rs.getDouble("tauxinteret")));
           }
         }
-        return null;
+        return Optional.empty();
       }
     } catch (SQLException e) {
       System.out.println("Erreur" + e);
-      return null;
+      return Optional.empty();
     }
   }
 }

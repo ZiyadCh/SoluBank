@@ -49,7 +49,7 @@ public class Main {
     System.out.println("│2❯ Ajouter un Client                 │");
     System.out.println("│3❯ Modifier un Client                │");
     System.out.println("│4❯ Supprimer un Client               │");
-    System.out.println("│5❯ Rechercher un Client par nom     │");
+    System.out.println("│5❯ Rechercher un Client par nom      │");
     System.out.println("└─────────────────────────────────────┘");
     switch (scanner.nextLine()) {
       case "1" -> clientService.listClients().forEach(System.out::println);
@@ -97,7 +97,12 @@ public class Main {
   public static void searchClientUI() {
     System.out.println("Nom du client:");
     String nom = scanner.nextLine();
-    System.out.println(clientService.searchClients(nom));
+    Client client = clientService.searchClients(nom);
+    if (client != null) {
+      System.out.println(client);
+    } else {
+      System.out.println("aucun cleint trouve");
+    }
 
   }
 

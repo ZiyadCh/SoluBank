@@ -16,7 +16,7 @@ public class CompteService {
   }
 
   public Compte getCompteById(int id) {
-    return compteDao.getById(id);
+    return compteDao.getById(id).orElse(null);
   }
 
   public void addCompte(Compte compte) {

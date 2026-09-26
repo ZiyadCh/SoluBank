@@ -64,19 +64,19 @@ public class ClientDao {
     }
   }
 
-  public Client getById(int id) {
+  public Optional<Client> getById(int id) {
     try (Connection con = Database.gConnection();
         PreparedStatement ps = con.prepareStatement("select id, nom, email from client where id = ?");) {
       ps.setInt(1, id);
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
-          return new Client(rs.getInt("id"), rs.getString("nom"), rs.getString("email"));
+          return Optional.of(new Client(rs.getInt("id"), rs.getString("nom"), rs.getString("email")));
         }
-        return null;
+        return Optional.empty();
       }
     } catch (SQLException e) {
       System.out.println("Erreur" + e);
-      return null;
+      return Optional.empty();
     }
   }
 
@@ -92,7 +92,7 @@ public class ClientDao {
       }
     } catch (SQLException e) {
       System.out.println("Erreur" + e);
-      return null;
+      return Optional.empty();
     }
   }
 
