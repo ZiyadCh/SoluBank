@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.time.LocalDate;
 import service.ClientService;
 import service.CompteService;
+import service.RapportService;
 import service.TransactionService;
 import models.Client;
 import models.Compte;
@@ -16,6 +17,7 @@ public class Main {
   public static ClientService clientService = new ClientService();
   public static CompteService compteService = new CompteService();
   public static TransactionService transactionService = new TransactionService();
+  public static RapportService rapportService = new RapportService();
 
   public static void main(String[] args) {
 
@@ -274,7 +276,7 @@ public class Main {
     System.out.println("│4❯ Comptes inactifs                  │");
     System.out.println("└─────────────────────────────────────┘");
     switch (scanner.nextLine()) {
-      case "1" -> System.out.println("top 5 a implementer");
+      case "1" -> System.out.println(rapportService.topFiveSolde());
       case "2" -> System.out.println("rapport mensuel a implementer");
       case "3" -> transactionService.susTransactions();
       case "4" -> System.out.println("comptes inactifs a implementer");
