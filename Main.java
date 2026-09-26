@@ -26,13 +26,15 @@ public class Main {
       System.out.println("│1❯ Gestion des Clients               │");
       System.out.println("│2❯ Gestion des Comptes               │");
       System.out.println("│3❯ Gestion des Transactions          │");
-      System.out.println("│4❯ Quitter                           │");
+      System.out.println("│4❯ Rapports                          │");
+      System.out.println("│5❯ Quitter                           │");
       System.out.println("└─────────────────────────────────────┘");
       switch (scanner.nextLine()) {
         case "1" -> afficherMenuClients();
         case "2" -> afficherMenuComptes();
         case "3" -> afficherMenuTransactions();
-        case "4" -> {
+        case "4" -> afficherMenuRapports();
+        case "5" -> {
           System.out.println("au revoir");
           return;
         }
@@ -258,6 +260,24 @@ public class Main {
           .forEach((key, value) -> System.out.println("Id " + key + ": moyen " + value));
 
       case "7" -> transactionService.susTransactions();
+      default -> System.out.println("choisir un option appropriat");
+    }
+  }
+
+  public static void afficherMenuRapports() {
+    System.out.println("┌─────────────────────────────────────┐");
+    System.out.println("│          Menu des Rapports          │");
+    System.out.println("├─────────────────────────────────────┤");
+    System.out.println("│1❯ Top 5 clients par solde           │");
+    System.out.println("│2❯ Rapport mensuel par type          │");
+    System.out.println("│3❯ Transactions suspectes            │");
+    System.out.println("│4❯ Comptes inactifs                  │");
+    System.out.println("└─────────────────────────────────────┘");
+    switch (scanner.nextLine()) {
+      case "1" -> System.out.println("top 5 a implementer");
+      case "2" -> System.out.println("rapport mensuel a implementer");
+      case "3" -> transactionService.susTransactions();
+      case "4" -> System.out.println("comptes inactifs a implementer");
       default -> System.out.println("choisir un option appropriat");
     }
   }
