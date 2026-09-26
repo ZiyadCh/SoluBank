@@ -53,24 +53,21 @@ public class TransactionService {
         .collect(Collectors.groupingBy(Transaction::getIdCompte, Collectors.summingDouble(Transaction::getMontant)));
   }
 
-  private List<Transaction> montantEleve() {
-    return transactionDao.getList()
-        .stream()
+  private List<Transaction> montantEleve(List<Transaction> all) {
+    return all.stream()
         .filter(n -> n.getMontant() > 1000)
         .collect(Collectors.toList());
   }
 
-  private Map<LocalDate, Long> toofrequent(int id) {
-    Map<LocalDate, Long> dates = transactionDao.getList()
-        .stream()
+  private Map<LocalDate, Long> toofrequent(List<Transaction> all, int id) {
+    Map<LocalDate, Long> dates = all.stream()
         .filter(n -> n.getIdCompte() == id)
         .collect(Collectors.groupingBy(Transaction::getDate, Collectors.counting()));
     return dates;
   }
 
-  private String differentLieu(int id) {
-    Optional<Map.Entry<String, Long>> findLieu = transactionDao.getList()
-        .stream()
+  private String differentLieu(List<Transaction> all, int id) {
+    Optional<Map.Entry<String, Long>> findLieu = all.stream()
         .filter(n -> n.getIdCompte() == id)
         .collect(Collectors.groupingBy(Transaction::getLieu, Collectors.counting()))
         .entrySet()
@@ -86,10 +83,10 @@ public class TransactionService {
   public List<Transaction> susTransactions() {
     List<Transaction> suspects = new ArrayList<>();
     List<Transaction> all = transactionDao.getList();
-    suspects.addAll(montantEleve());
+    suspects.addAll(montantEleve(all));
     for (Transaction transaction : all) {
-      if (!transaction.getLieu().equals(differentLieu(transaction.getIdCompte()))
-          || toofrequent(transaction.getIdCompte())
+      if (!transaction.getLieu().equals(differentLieu(all, transaction.getIdCompte()))
+          || toofrequent(all, transaction.getIdCompte())
               .values()
               .stream()
               .anyMatch(n -> n > 3)) {
