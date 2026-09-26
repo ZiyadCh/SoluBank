@@ -51,14 +51,14 @@ public class TransactionService {
         .collect(Collectors.groupingBy(Transaction::getIdCompte, Collectors.summingDouble(Transaction::getMontant)));
   }
 
-  public List<Transaction> montantEleve() {
+  private List<Transaction> montantEleve() {
     return transactionDao.getList()
         .stream()
         .filter(n -> n.getMontant() > 1000)
         .collect(Collectors.toList());
   }
 
-  public String differentLieu(int id) {
+  private String differentLieu(int id) {
     Optional<Map.Entry<String, Long>> findLieu = transactionDao.getList()
         .stream()
         .filter(n -> n.getIdCompte() == id)
