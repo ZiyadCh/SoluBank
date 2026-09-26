@@ -1,5 +1,7 @@
 package service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -56,6 +58,14 @@ public class TransactionService {
         .stream()
         .filter(n -> n.getMontant() > 1000)
         .collect(Collectors.toList());
+  }
+
+  private Map<LocalDate, Long> toofrequent(int id) {
+    Map<LocalDate, Long> dates = transactionDao.getList()
+        .stream()
+        .filter(n -> n.getIdCompte() == id)
+        .collect(Collectors.groupingBy(Transaction::getDate, Collectors.counting()));
+    return dates;
   }
 
   private String differentLieu(int id) {
