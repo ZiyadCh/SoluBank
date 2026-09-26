@@ -85,13 +85,16 @@ public class TransactionService {
 
   public List<Transaction> susTransactions() {
     List<Transaction> suspects = new ArrayList<>();
-    List<Transaction> lieus = new ArrayList<>();
+    List<Transaction> all = transactionDao.getList();
     suspects.addAll(montantEleve());
-    for (Transaction transaction : transactionDao.getList()) {
-      if (!transaction.getLieu().equals(differentLieu(transaction.getIdCompte()))) {
+    for (Transaction transaction : all) {
+      if (!transaction.getLieu().equals(differentLieu(transaction.getIdCompte()))
+          || toofrequent(transaction.getIdCompte())
+              .values()
+              .stream()
+              .anyMatch(n -> n > 3)) {
         suspects.add(transaction);
       }
-
     }
     return suspects;
   }
