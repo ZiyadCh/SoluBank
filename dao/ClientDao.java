@@ -81,7 +81,7 @@ public class ClientDao {
   public ArrayList<Client> getByName(String search) {
     try (Connection con = Database.gConnection();
         PreparedStatement ps = con.prepareStatement("select id, nom, email from client where lower(nom) like ?");) {
-      ps.setString(1, "%" + search.toLowerCase() + "%");
+      ps.setString(1, search.toLowerCase());
       try (ResultSet rs = ps.executeQuery()) {
         ArrayList<Client> list = new ArrayList<>();
         while (rs.next()) {
