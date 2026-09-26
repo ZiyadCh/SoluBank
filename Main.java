@@ -49,12 +49,14 @@ public class Main {
     System.out.println("│2❯ Ajouter un Client                 │");
     System.out.println("│3❯ Modifier un Client                │");
     System.out.println("│4❯ Supprimer un Client               │");
+    System.out.println("│5❯ Rechercher un Client par nom     │");
     System.out.println("└─────────────────────────────────────┘");
     switch (scanner.nextLine()) {
       case "1" -> clientService.listClients().forEach(System.out::println);
       case "2" -> addClientUI();
       case "3" -> modifyClientUI();
       case "4" -> deleteClientUI();
+      case "5" -> searchClientUI();
       default -> System.out.println("choisir un option appropriat");
     }
   }
@@ -90,6 +92,12 @@ public class Main {
     scanner.nextLine();
     clientService.deleteClient(id);
     System.out.println("client suppimre avec success");
+  }
+
+  public static void searchClientUI() {
+    System.out.println("Nom du client:");
+    String nom = scanner.nextLine();
+    clientService.searchClients(nom).forEach(System.out::println);
   }
 
   public static void addCompteUI() {

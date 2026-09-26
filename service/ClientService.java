@@ -18,6 +18,10 @@ public class ClientService {
     return clientDao.getById(id);
   }
 
+  public ArrayList<Client> searchClients(String search) {
+    return clientDao.getByName(search);
+  }
+
   public void addClient(Client client) {
     clientDao.add(client);
   }

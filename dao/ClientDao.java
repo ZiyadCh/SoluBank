@@ -78,4 +78,21 @@ public class ClientDao {
     }
   }
 
+  public ArrayList<Client> getByName(String search) {
+    try (Connection con = Database.gConnection();
+        PreparedStatement ps = con.prepareStatement("select id, nom, email from client where lower(nom) like ?");) {
+      ps.setString(1, "%" + search.toLowerCase() + "%");
+      try (ResultSet rs = ps.executeQuery()) {
+        ArrayList<Client> list = new ArrayList<>();
+        while (rs.next()) {
+          list.add(new Client(rs.getInt("id"), rs.getString("nom"), rs.getString("email")));
+        }
+        return list;
+      }
+    } catch (SQLException e) {
+      System.out.println("Erreur" + e);
+      return null;
+    }
+  }
+
 }
