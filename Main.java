@@ -97,7 +97,8 @@ public class Main {
   public static void searchClientUI() {
     System.out.println("Nom du client:");
     String nom = scanner.nextLine();
-    clientService.searchClients(nom).forEach(System.out::println);
+    System.out.println(clientService.searchClients(nom));
+
   }
 
   public static void addCompteUI() {

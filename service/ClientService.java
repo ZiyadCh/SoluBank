@@ -18,7 +18,7 @@ public class ClientService {
     return clientDao.getById(id);
   }
 
-  public ArrayList<Client> searchClients(String search) {
+  public Client searchClients(String search) {
     return clientDao.getByName(search);
   }
 
