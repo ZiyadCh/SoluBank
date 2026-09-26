@@ -56,4 +56,15 @@ public class TransactionService {
         .filter(n -> n.getMontant() > 1000)
         .collect(Collectors.toList());
   }
+
+  public void differentLieu(int id) {
+    transactionDao.getList()
+        .stream()
+        .filter(n -> n.getIdCompte() == id)
+        .collect(Collectors.groupingBy(Transaction::getLieu, Collectors.counting()))
+        .entrySet()
+        .stream()
+        .max(Map.Entry.comparingByValue())
+        .ifPresent(n -> System.out.println(n));
+  }
 }
