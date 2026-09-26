@@ -80,19 +80,50 @@ public class TransactionService {
     return mainLieu;
   }
 
-  public List<Transaction> susTransactions() {
-    List<Transaction> suspects = new ArrayList<>();
+  public void susTransactions() {
     List<Transaction> all = transactionDao.getList();
-    suspects.addAll(montantEleve(all));
+
+    List<Transaction> montantEleves = montantEleve(all);
+
+    List<Transaction> lieuxInhabituels = new ArrayList<>();
+    List<Transaction> frequencesExcessives = new ArrayList<>();
     for (Transaction transaction : all) {
-      if (!transaction.getLieu().equals(differentLieu(all, transaction.getIdCompte()))
-          || toofrequent(all, transaction.getIdCompte())
-              .values()
-              .stream()
-              .anyMatch(n -> n > 3)) {
-        suspects.add(transaction);
+      if (!transaction.getLieu().equals(differentLieu(all, transaction.getIdCompte()))) {
+        lieuxInhabituels.add(transaction);
+      }
+      if (toofrequent(all, transaction.getIdCompte())
+          .values()
+          .stream()
+          .anyMatch(n -> n > 3)) {
+        frequencesExcessives.add(transaction);
       }
     }
-    return suspects;
+
+    System.out.println("┌─────────────────────────────────────┐");
+    System.out.println("│     Montant eleve (>1000)           │");
+    System.out.println("├─────────────────────────────────────┤");
+    if (montantEleves.isEmpty()) {
+      System.out.println("│     (aucune transaction)            │");
+    } else {
+      montantEleves.forEach(System.out::println);
+    }
+
+    System.out.println("┌─────────────────────────────────────┐");
+    System.out.println("│ Lieu different de l'habituel        │");
+    System.out.println("├─────────────────────────────────────┤");
+    if (lieuxInhabituels.isEmpty()) {
+      System.out.println("│     (aucune transaction)            │");
+    } else {
+      lieuxInhabituels.forEach(System.out::println);
+    }
+
+    System.out.println("┌─────────────────────────────────────┐");
+    System.out.println("│ Frequence excessive (>3 par jour)   │");
+    System.out.println("├─────────────────────────────────────┤");
+    if (frequencesExcessives.isEmpty()) {
+      System.out.println("│     (aucune transaction)            │");
+    } else {
+      frequencesExcessives.forEach(System.out::println);
+    }
   }
 }

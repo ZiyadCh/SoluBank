@@ -257,7 +257,7 @@ public class Main {
       case "6" -> transactionService.sumTransaction()
           .forEach((key, value) -> System.out.println("Id " + key + ": moyen " + value));
 
-      case "7" -> transactionService.susTransactions().forEach(n -> System.out.println(n));
+      case "7" -> transactionService.susTransactions();
       default -> System.out.println("choisir un option appropriat");
     }
   }
