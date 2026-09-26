@@ -49,4 +49,11 @@ public class TransactionService {
         .stream()
         .collect(Collectors.groupingBy(Transaction::getIdCompte, Collectors.summingDouble(Transaction::getMontant)));
   }
+
+  public List<Transaction> montantEleve() {
+    return transactionDao.getList()
+        .stream()
+        .filter(n -> n.getMontant() > 1000)
+        .collect(Collectors.toList());
+  }
 }
