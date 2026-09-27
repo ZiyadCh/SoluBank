@@ -34,9 +34,9 @@ public class RapportService {
 
   }
 
-  public Map<TypeTransaction, List<Transaction>> grouperPar() {
+  public Map<TypeTransaction, Long> grouperPar() {
     return transactionDao.getList()
         .stream()
-        .collect(Collectors.groupingBy(Transaction::getType));
+        .collect(Collectors.groupingBy(Transaction::getType, Collectors.counting()));
   }
 }

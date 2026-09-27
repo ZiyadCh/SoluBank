@@ -277,7 +277,7 @@ public class Main {
     System.out.println("└─────────────────────────────────────┘");
     switch (scanner.nextLine()) {
       case "1" -> System.out.println(rapportService.topFiveSolde());
-      case "2" -> System.out.println("rapport mensuel a implementer");
+      case "2" -> rapportService.grouperPar().forEach((key, value) -> System.out.println(key + ": " + value));
       case "3" -> transactionService.susTransactions();
       case "4" -> System.out.println("comptes inactifs a implementer");
       default -> System.out.println("choisir un option appropriat");
