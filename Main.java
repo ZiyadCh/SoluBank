@@ -271,15 +271,11 @@ public class Main {
     System.out.println("│          Menu des Rapports          │");
     System.out.println("├─────────────────────────────────────┤");
     System.out.println("│1❯ Top 5 clients par solde           │");
-    System.out.println("│2❯ Rapport mensuel par type          │");
-    System.out.println("│3❯ Transactions suspectes            │");
-    System.out.println("│4❯ Comptes inactifs                  │");
+    System.out.println("│2❯ Nomber du trasaction par type     │");
     System.out.println("└─────────────────────────────────────┘");
     switch (scanner.nextLine()) {
       case "1" -> System.out.println(rapportService.topFiveSolde());
       case "2" -> rapportService.grouperPar().forEach((key, value) -> System.out.println(key + ": " + value));
-      case "3" -> transactionService.susTransactions();
-      case "4" -> System.out.println("comptes inactifs a implementer");
       default -> System.out.println("choisir un option appropriat");
     }
   }
