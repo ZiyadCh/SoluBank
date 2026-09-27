@@ -33,17 +33,10 @@ L'application est organisee en couches :
 
 ## Base de donnees
 
-PostgreSQL, base `solbank`, connexion configuree dans `utils/Database.java`.
-
-```
-jdbc:postgresql://localhost/solbank?user=kaiser&password=kaiser
-```
-
 ## Compilation et execution
 
 ```bash
-javac -cp libraries/postgresql-42.7.13.jar -d out Main.java service/*.java models/*.java dao/*.java utils/*.java
-java -cp out:libraries/postgresql-42.7.13.jar Main
+ java -jar SoluBank.jar 
 ```
 
 ## Dependance
